@@ -11,16 +11,16 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Getter
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
 
     @NotNull
-    @Column(name = "name", length = 30)
+    @Column(length = 30)
     private String name;
 
     @NotNull
@@ -28,9 +28,11 @@ public class User extends BaseTimeEntity {
     private LocalDate birthday;
 
     @NotNull
+    @Column(length = 30)
     private String email;
 
     @NotNull
+    @Column(length = 30)
     private String phoneNumber;
 
     @Lob
@@ -48,7 +50,8 @@ public class User extends BaseTimeEntity {
         this.bio = bio;
     }
 
-    public void ChangeInfo(String name, LocalDate birthday, String email, String phoneNumber, String bio) {
+    public void ChangeInfo(String name, LocalDate birthday, String email, String phoneNumber,
+        String bio) {
         this.name = name;
         this.birthday = birthday;
         this.email = email;

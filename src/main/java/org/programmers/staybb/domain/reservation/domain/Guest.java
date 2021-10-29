@@ -10,11 +10,8 @@ import java.util.Objects;
 @Getter
 public class Guest {
 
-    @ColumnDefault("1")
     private int adult;
-    @ColumnDefault("0")
     private int teen;
-    @ColumnDefault("0")
     private int kid;
 
     protected Guest() {
@@ -28,8 +25,12 @@ public class Guest {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Guest guest = (Guest) o;
         return adult == guest.adult && teen == guest.teen && kid == guest.kid;
     }
