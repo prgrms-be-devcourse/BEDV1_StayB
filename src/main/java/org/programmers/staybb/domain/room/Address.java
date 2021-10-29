@@ -1,4 +1,4 @@
-package org.programmers.staybb.domain.room.domain;
+package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;

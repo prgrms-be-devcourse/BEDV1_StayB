@@ -1,4 +1,4 @@
-package org.programmers.staybb.domain.user.domain;
+package org.programmers.staybb.domain.user;
 
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;

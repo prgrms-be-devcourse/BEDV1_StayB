@@ -1,7 +1,6 @@
-package org.programmers.staybb.domain.reservation.domain;
+package org.programmers.staybb.domain.reservation;
 
 import lombok.Getter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;

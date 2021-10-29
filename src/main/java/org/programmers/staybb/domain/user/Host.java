@@ -1,4 +1,4 @@
-package org.programmers.staybb.domain.user.domain;
+package org.programmers.staybb.domain.user;
 
 import com.sun.istack.NotNull;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import org.programmers.staybb.domain.room.domain.Room;
+import org.programmers.staybb.domain.room.Room;
 
 @Entity
 @Getter

@@ -1,8 +1,8 @@
-package org.programmers.staybb.domain.room.domain;
+package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
 import lombok.Builder;
-import org.programmers.staybb.domain.user.domain.Host;
+import org.programmers.staybb.domain.user.Host;
 
 import javax.persistence.*;
 

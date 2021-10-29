@@ -1,12 +1,10 @@
-package org.programmers.staybb.domain.reservation.domain;
+package org.programmers.staybb.domain.reservation;
 
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.annotations.DynamicInsert;
-import org.programmers.staybb.domain.reservation.domain.Guest;
-import org.programmers.staybb.domain.room.domain.Room;
-import org.programmers.staybb.domain.user.domain.User;
+import org.programmers.staybb.domain.room.Room;
+import org.programmers.staybb.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalTime;
