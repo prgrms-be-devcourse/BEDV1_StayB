@@ -12,9 +12,8 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "reservation")
 @Getter
-@DynamicInsert
 public class Reservation {
 
     @Id
@@ -49,7 +48,8 @@ public class Reservation {
     }
 
     @Builder
-    public Reservation(LocalTime startDate, LocalTime endDate, int totalPrice, Guest guest, String message) {
+    public Reservation(LocalTime startDate, LocalTime endDate, int totalPrice, Guest guest,
+        String message) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
@@ -57,7 +57,8 @@ public class Reservation {
         this.message = message;
     }
 
-    public void changeInfo(LocalTime startDate, LocalTime endDate, int totalPrice, Guest guest, String message) {
+    public void changeInfo(LocalTime startDate, LocalTime endDate, int totalPrice, Guest guest,
+        String message) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;

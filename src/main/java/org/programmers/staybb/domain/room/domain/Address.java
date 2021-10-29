@@ -30,10 +30,15 @@ public class Address {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Address address1 = (Address) o;
-        return Objects.equals(region, address1.region) && Objects.equals(address, address1.address) && Objects.equals(detail_address, address1.detail_address);
+        return Objects.equals(region, address1.region) && Objects.equals(address, address1.address)
+            && Objects.equals(detail_address, address1.detail_address);
     }
 
     @Override
