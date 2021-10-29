@@ -7,7 +7,7 @@ import org.programmers.staybb.domain.user.domain.Host;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room")
 public class Room {
 
     @Id
@@ -22,7 +22,7 @@ public class Room {
     private Address address;
 
     @NotNull
-    @Column(name = "num_of_guests")
+    @Column(name = "max_guest")
     private int maxGuest;
 
     @Embedded
@@ -42,23 +42,30 @@ public class Room {
     }
 
     @Builder
-    public Room(String roomName, Address address, int maxGuest, Option option, String description, Host host, int price) {
+    public Room(String roomName, Address address, int maxGuest, Option option, String description,
+        Host host, int price) {
         this.roomName = roomName;
         this.address = address;
         this.maxGuest = maxGuest;
         this.option = option;
         this.description = description;
-        this.host = host;
+        addRoom(host);
         this.price = price;
     }
 
-    public void changeInfo(String roomName, Address address, int maxGuest, Option option, String description,int price) {
+    public void changeInfo(String roomName, Address address, int maxGuest, Option option,
+        String description, int price) {
         this.roomName = roomName;
         this.address = address;
         this.maxGuest = maxGuest;
         this.option = option;
         this.description = description;
         this.price = price;
+    }
+
+    public void addRoom(Host host) {
+        host.getRooms().add(this);
+        this.host = host;
     }
 
 }
