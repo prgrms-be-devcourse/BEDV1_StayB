@@ -18,8 +18,8 @@ public class Host {
     private long id;
 
     @NotNull
-    @Column(columnDefinition = "TINYINT", length = 1)
-    private boolean is_superHost = false;
+    @Column(columnDefinition = "TINYINT default false", length = 1)
+    private boolean is_superHost;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
@@ -32,9 +32,13 @@ public class Host {
     }
 
     @Builder
-    public Host(boolean is_superHost, User user) {
-        this.is_superHost = is_superHost;
+    public Host(User user) {
+        this.is_superHost = false;
         this.user = user;
+    }
+
+    public void beSuperHost() {
+        this.is_superHost = true;
     }
 
 }

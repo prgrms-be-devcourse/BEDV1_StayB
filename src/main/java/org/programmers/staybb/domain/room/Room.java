@@ -2,6 +2,7 @@ package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
 import lombok.Builder;
+import lombok.Getter;
 import org.programmers.staybb.domain.user.Host;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import org.programmers.staybb.global.BaseTimeEntity;
 
 @Entity
 @Table(name = "room")
+@Getter
 public class Room extends BaseTimeEntity {
 
     @Id
