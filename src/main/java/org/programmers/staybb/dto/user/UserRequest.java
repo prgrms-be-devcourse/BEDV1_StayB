@@ -10,9 +10,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
-import org.programmers.staybb.DateValid;
+import org.programmers.staybb.global.validation.DateValid;
 import org.programmers.staybb.domain.user.User;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Builder
@@ -46,6 +45,5 @@ public class UserRequest {
             .bio(this.bio)
             .build();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package org.programmers.staybb.service.user;
+package org.programmers.staybb.service;
 
 import javassist.NotFoundException;
 import org.programmers.staybb.domain.user.User;
@@ -25,7 +25,7 @@ public class UserService {
     public Long removeUser(final Long id) throws NotFoundException {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("ddd"));
-        user.deletedUser();
+        userRepository.delete(user);
         return user.getId();
     }
 

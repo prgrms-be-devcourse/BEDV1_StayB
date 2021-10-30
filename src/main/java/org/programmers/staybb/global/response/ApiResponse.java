@@ -1,10 +1,7 @@
-package org.programmers.staybb.global;
+package org.programmers.staybb.global.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -25,6 +22,5 @@ public class ApiResponse<T> {
         this.success = success;
         this.serverDatetime = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
     }
-
 
 }

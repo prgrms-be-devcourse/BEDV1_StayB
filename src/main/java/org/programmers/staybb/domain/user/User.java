@@ -17,7 +17,7 @@ public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
 
     @NotNull
     @Column(length = 30)
@@ -38,10 +38,6 @@ public class User extends BaseTimeEntity {
     @Lob
     private String bio;
 
-    @NotNull
-    @Column(columnDefinition = "TINYINT default false")
-    private boolean isDeleted;
-
     protected User() {
     }
 
@@ -61,10 +57,6 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
-    }
-
-    public void deletedUser() {
-        this.isDeleted = true;
     }
 
 }

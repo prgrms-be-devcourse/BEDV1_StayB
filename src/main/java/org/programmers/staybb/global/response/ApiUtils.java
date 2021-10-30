@@ -1,4 +1,4 @@
-package org.programmers.staybb.global;
+package org.programmers.staybb.global.response;
 
 public class ApiUtils {
 
@@ -9,4 +9,5 @@ public class ApiUtils {
     public static ApiResponse<?> error(String message, int statusCode) {
         return new ApiResponse<>(null,false,  new ApiError(message, statusCode));
     }
+
 }
