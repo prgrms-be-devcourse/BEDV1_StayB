@@ -16,27 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RoomController {
 
-  private final RoomService roomService;
+    private final RoomService roomService;
 
-  @Autowired
-  private RoomController(RoomService roomService) {
-    this.roomService = roomService;
-  }
+    @Autowired
+    private RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
-  @ExceptionHandler
-  public ApiResponse<String> notFoundHandler(NotFoundException e) {
-    return ApiResponse.fail(404, e.getMessage());
-  }
+    @ExceptionHandler
+    public ApiResponse<String> notFoundHandler(NotFoundException e) {
+        return ApiResponse.fail(404, e.getMessage());
+    }
 
-  @PostMapping("/rooms")
-  public ApiResponse<RoomResponseDto> save(@RequestBody RoomRequestDto roomDto) {
-    return ApiResponse.ok(roomService.save(roomDto));
-  }
+    @PostMapping("/rooms")
+    public ApiResponse<RoomResponseDto> save(@RequestBody RoomRequestDto roomDto) {
+        return ApiResponse.ok(roomService.save(roomDto));
+    }
 
-  @DeleteMapping("/rooms/{roomId}")
-  public ApiResponse<String> delete(@PathVariable int roomId) throws NotFoundException {
-    roomService.delete(roomId);
-    return ApiResponse.ok("숙소가 삭제되었습니다.");
-  }
+    @DeleteMapping("/rooms/{roomId}")
+    public ApiResponse<String> delete(@PathVariable int roomId) throws NotFoundException {
+        roomService.delete(roomId);
+        return ApiResponse.ok("숙소가 삭제되었습니다.");
+    }
 
 }
