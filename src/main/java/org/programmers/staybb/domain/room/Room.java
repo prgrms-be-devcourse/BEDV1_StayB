@@ -5,10 +5,11 @@ import lombok.Builder;
 import org.programmers.staybb.domain.user.Host;
 
 import javax.persistence.*;
+import org.programmers.staybb.global.BaseTimeEntity;
 
 @Entity
 @Table(name = "room")
-public class Room {
+public class Room extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
