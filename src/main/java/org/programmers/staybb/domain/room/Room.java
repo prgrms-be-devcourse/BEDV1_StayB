@@ -2,13 +2,16 @@ package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
 import lombok.Builder;
+import lombok.Getter;
 import org.programmers.staybb.domain.user.Host;
 
 import javax.persistence.*;
+import org.programmers.staybb.global.BaseTimeEntity;
 
+@Getter
 @Entity
 @Table(name = "room")
-public class Room {
+public class Room extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
