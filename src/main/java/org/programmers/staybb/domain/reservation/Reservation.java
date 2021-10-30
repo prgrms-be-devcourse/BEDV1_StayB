@@ -8,11 +8,12 @@ import org.programmers.staybb.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import org.programmers.staybb.global.BaseTimeEntity;
 
 @Entity
 @Table(name = "reservation")
 @Getter
-public class Reservation {
+public class Reservation extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

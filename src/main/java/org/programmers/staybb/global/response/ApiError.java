@@ -1,4 +1,4 @@
-package org.programmers.staybb.global;
+package org.programmers.staybb.global.response;
 
 import lombok.Getter;
 
@@ -12,4 +12,5 @@ public class ApiError {
         this.message = message;
         this.status = status;
     }
+
 }
