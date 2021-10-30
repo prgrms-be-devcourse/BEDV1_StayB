@@ -10,29 +10,21 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ApiResponse<T> {
 
-    private int statusCode;
-
-    private T data;
+    private final ApiError apiError;
+    private final T data;
+    private final boolean success;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime serverDatetime;
+    private final LocalDateTime serverDatetime;
 
-    @Builder
-    public ApiResponse(int statusCode, T data) {
-        this.statusCode = statusCode;
+    public ApiResponse(T data, boolean success, ApiError apiError) {
+        this.apiError = apiError;
         this.data = data;
+        this.success = success;
         this.serverDatetime = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
     }
 
-    public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(200, data);
-    }
-
-    public static <T> ApiResponse<T> fail(int statusCode, T data) {
-        return new ApiResponse<>(statusCode, data);
-    }
 
 }
