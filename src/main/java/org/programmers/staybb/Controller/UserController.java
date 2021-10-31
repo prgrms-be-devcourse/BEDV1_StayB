@@ -1,4 +1,4 @@
-package org.programmers.staybb.Controller.User;
+package org.programmers.staybb.controller;
 
 import javassist.NotFoundException;
 import javax.validation.Valid;
