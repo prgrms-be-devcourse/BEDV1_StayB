@@ -14,6 +14,4 @@ public class GlobalException {
         return ApiUtils.error(e.getMessage(), 404);
     }
 
-
-
 }
