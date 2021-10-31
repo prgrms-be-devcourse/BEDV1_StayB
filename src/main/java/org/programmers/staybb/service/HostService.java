@@ -6,7 +6,7 @@ import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.domain.user.User;
 import org.programmers.staybb.dto.user.HostResponse;
-import org.programmers.staybb.global.exception.ApiException;
+import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.HostRepository;
 import org.programmers.staybb.repository.UserRepository;
@@ -27,9 +27,9 @@ public class HostService {
         this.hostRepository = hostRepository;
     }
 
-    public Long addHost(final Long userId) {
+    public Long addHost(final Long userId) throws EntityNotFoundException {
         User findUser = userRepository.findById(userId)
-            .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(()->new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
         Host host = Host.builder()
             .user(findUser)
             .build();
@@ -37,17 +37,14 @@ public class HostService {
     }
 
     @Transactional(readOnly = true)
-    public HostResponse findHost(final Long hostId) {
+    public HostResponse findHost(final Long hostId) throws EntityNotFoundException {
         Host findHost = hostRepository.findById(hostId)
-            .orElseThrow(() -> new ApiException(ErrorCode.HOST_NOT_FOUND));
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND));
 
-        List<Long> roomsId = findHost.getRooms().stream().map(Room::getId)
+        List<Long> roomIds = findHost.getRooms().stream().map(Room::getId)
             .collect(Collectors.toList());
 
-        return HostResponse.builder()
-            .name(findHost.getUser().getName())
-            .is_superhost(findHost.is_superHost())
-            .roomsId(roomsId).build();
+        return HostResponse.of(findHost, findHost.getUser().getName(), roomIds);
     }
 
 }

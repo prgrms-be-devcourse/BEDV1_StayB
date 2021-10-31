@@ -6,18 +6,29 @@ import lombok.Getter;
 import org.programmers.staybb.domain.user.Host;
 
 @Getter
-@Builder
 public class HostResponse {
 
-    private final String name;
+    private String name;
 
-    private final boolean is_superhost;
+    private boolean isSuperhost;
 
-    private final List<Long> roomsId;
+    private List<Long> roomIds;
 
-    public HostResponse(Host entity, String userName, List<Long> roomsId) {
-        this.name = userName;
-        this.is_superhost = entity.is_superHost();
-        this.roomsId = roomsId;
+    protected HostResponse() {
+    }
+
+    @Builder
+    public HostResponse(String name, boolean isSuperhost, List<Long> roomIds) {
+        this.name = name;
+        this.isSuperhost = isSuperhost;
+        this.roomIds = roomIds;
+    }
+
+    public static HostResponse of(Host entity, String userName, List<Long> roomIds) {
+        return HostResponse.builder()
+            .name(userName)
+            .isSuperhost(entity.is_superHost())
+            .roomIds(roomIds)
+            .build();
     }
 }

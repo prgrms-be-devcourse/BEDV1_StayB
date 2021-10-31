@@ -1,8 +1,9 @@
 package org.programmers.staybb.service;
 
-import javassist.NotFoundException;
 import org.programmers.staybb.domain.user.User;
 import org.programmers.staybb.dto.user.UserRequest;
+import org.programmers.staybb.global.exception.EntityNotFoundException;
+import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,12 @@ public class UserService {
         return userRepository.save(user).getId();
     }
 
-    public Long removeUser(final Long id) throws NotFoundException {
+    public Long removeUser(final Long id) throws EntityNotFoundException {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("ddd"));
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
         userRepository.delete(user);
         return user.getId();
     }
+
 
 }

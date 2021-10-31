@@ -15,7 +15,7 @@ public class Host {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotNull
     @Column(columnDefinition = "TINYINT default false", length = 1)
