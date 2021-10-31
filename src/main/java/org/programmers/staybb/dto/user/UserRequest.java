@@ -10,7 +10,6 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
-import org.programmers.staybb.global.validation.DateValid;
 import org.programmers.staybb.domain.user.User;
 
 @Getter
@@ -22,7 +21,6 @@ public class UserRequest {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @NotNull(message = "생년월일을 입력해주세요.")
-    @DateValid
     @Past(message = "생년월일을 다시 입력해주세요.")
     private final LocalDate birthday;
 

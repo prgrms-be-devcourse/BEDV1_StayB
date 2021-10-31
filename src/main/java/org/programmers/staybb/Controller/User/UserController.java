@@ -1,11 +1,10 @@
 package org.programmers.staybb.Controller.User;
 
-import javassist.NotFoundException;
 import javax.validation.Valid;
 import org.programmers.staybb.dto.user.UserRequest;
-import org.programmers.staybb.global.response.ApiResponse;
-import org.programmers.staybb.global.response.ApiUtils;
+import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +23,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ApiResponse<Long> SignUp(final @RequestBody @Valid UserRequest userRequest) {
-        return ApiUtils.success(userService.addUser(userRequest));
+    public ResponseEntity<Long> signUp(final @RequestBody @Valid UserRequest userRequest) {
+        return ResponseEntity.ok(userService.addUser(userRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Long> removeUser(final @PathVariable Long id) throws NotFoundException {
-        return ApiUtils.success(userService.removeUser(id));
+    public ResponseEntity<Long> removeUser(final @PathVariable Long id)
+        throws EntityNotFoundException {
+        return ResponseEntity.ok().body(userService.removeUser(id));
     }
+
 
 }
