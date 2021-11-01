@@ -1,4 +1,4 @@
-package org.programmers.staybb.Controller.User;
+package org.programmers.staybb.controller;
 
 import javax.validation.Valid;
 import org.programmers.staybb.dto.user.UserRequest;
