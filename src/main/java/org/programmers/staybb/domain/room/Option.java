@@ -1,6 +1,7 @@
 package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Embeddable;
@@ -15,12 +16,13 @@ public class Option {
     @NotNull
     private int bedroomNum;
     @NotNull
-    private float bathroomNum;
+    private double bathroomNum;
 
     protected Option() {
     }
 
-    public Option(int bedNum, int bedroomNum, int bathroomNum) {
+    @Builder
+    public Option(int bedNum, int bedroomNum, double bathroomNum) {
         this.bedNum = bedNum;
         this.bedroomNum = bedroomNum;
         this.bathroomNum = bathroomNum;

@@ -40,5 +40,4 @@ public class Host {
     public void beSuperHost() {
         this.is_superHost = true;
     }
-
 }
