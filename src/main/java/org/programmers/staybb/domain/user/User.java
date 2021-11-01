@@ -50,7 +50,7 @@ public class User extends BaseTimeEntity {
         this.bio = bio;
     }
 
-    public void ChangeInfo(String name, LocalDate birthday, String email, String phoneNumber,
+    public void changeInfo(String name, LocalDate birthday, String email, String phoneNumber,
         String bio) {
         this.name = name;
         this.birthday = birthday;
