@@ -28,23 +28,44 @@ public class HostService {
     }
 
     public Long addHost(final Long userId) throws EntityNotFoundException {
-        User findUser = userRepository.findById(userId)
-            .orElseThrow(()->new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+        User findUser = validUserId(userId);
         Host host = Host.builder()
             .user(findUser)
             .build();
-        return host.getId();
+        return hostRepository.save(host).getId();
     }
 
     @Transactional(readOnly = true)
     public HostResponse findHost(final Long hostId) throws EntityNotFoundException {
-        Host findHost = hostRepository.findById(hostId)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND));
+        Host findHost = validHostId(hostId);
 
         List<Long> roomIds = findHost.getRooms().stream().map(Room::getId)
             .collect(Collectors.toList());
 
         return HostResponse.of(findHost, findHost.getUser().getName(), roomIds);
     }
+
+    public Long changeToHost(final Long userId) {
+        validUserId(userId);
+        return hostRepository.findByUserId(userId)
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND))
+            .getId();
+    }
+
+    public Long changeToUser(final Long hostID) {
+        Host host = validHostId(hostID);
+        return host.getUser().getId();
+    }
+
+    private User validUserId(Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    private Host validHostId(Long hostId) {
+        return hostRepository.findById(hostId)
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND));
+    }
+
 
 }
