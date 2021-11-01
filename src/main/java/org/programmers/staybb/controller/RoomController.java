@@ -1,4 +1,4 @@
-package org.programmers.staybb.controller.room;
+package org.programmers.staybb.controller;
 
 import javassist.NotFoundException;
 import org.programmers.staybb.dto.room.RoomRequest;
