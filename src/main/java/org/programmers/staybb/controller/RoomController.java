@@ -1,9 +1,9 @@
 package org.programmers.staybb.controller;
 
 import javassist.NotFoundException;
+import javax.validation.Valid;
 import org.programmers.staybb.dto.room.RoomRequest;
 import org.programmers.staybb.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,8 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> save(final @RequestBody RoomRequest roomRequest) throws NotFoundException {
+    public ResponseEntity<Long> save(final @RequestBody @Valid RoomRequest roomRequest)
+        throws NotFoundException {
         return ResponseEntity.ok(roomService.save(roomRequest));
     }
 
