@@ -42,7 +42,7 @@ public class ReservationSaveRequest {
     @NotNull
     private final Long roomId;
 
-    public Guest getGuest() {
+    private Guest getGuest() {
         return new Guest(adult, teen, child);
     }
 
