@@ -23,10 +23,11 @@ public class UserService {
         return userRepository.save(user).getId();
     }
 
-    public Long removeUser(final Long id) throws EntityNotFoundException {
-        User user = userRepository.findById(id)
+    public Long removeUser(final Long userId) throws EntityNotFoundException {
+        User user = userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
         userRepository.delete(user);
-        return user.getId();
+        return userId;
     }
+
 }

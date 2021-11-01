@@ -31,4 +31,5 @@ public class HostController {
         throws EntityNotFoundException {
         return ResponseEntity.ok(hostService.findHost(hostId));
     }
+
 }
