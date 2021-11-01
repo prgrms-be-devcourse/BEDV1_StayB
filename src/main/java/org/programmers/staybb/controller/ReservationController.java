@@ -62,7 +62,7 @@ public class ReservationController {
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateOne(@PathVariable Long id,
         @Valid @RequestBody ReservationUpdateRequest updateRequest) throws EntityNotFoundException {
-        return ResponseEntity.ok(reservationService.updateReservation(id, , updateRequest));
+        return ResponseEntity.ok(reservationService.updateReservation(id, updateRequest));
     }
 
     @DeleteMapping("/{id}")
