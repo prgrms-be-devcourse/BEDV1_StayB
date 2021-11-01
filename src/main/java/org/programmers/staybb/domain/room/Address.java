@@ -1,6 +1,7 @@
 package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Embeddable;
@@ -22,6 +23,7 @@ public class Address {
     protected Address() {
     }
 
+    @Builder
     public Address(String region, String address, String detail_address) {
         this.region = region;
         this.address = address;

@@ -1,6 +1,11 @@
 package org.programmers.staybb.domain.room;
 
 import com.sun.istack.NotNull;
+
+import lombok.Builder;
+import lombok.Getter;
+
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.Getter;
@@ -19,6 +24,7 @@ public class Option {
     protected Option() {
     }
 
+    @Builder
     public Option(int bedNum, int bedroomNum, double bathroomNum) {
         this.bedNum = bedNum;
         this.bedroomNum = bedroomNum;
