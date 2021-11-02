@@ -1,6 +1,8 @@
 package org.programmers.staybb.controller;
 
+import java.util.List;
 import javax.validation.Valid;
+import org.programmers.staybb.dto.Reservation.CheckDateResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByGuestResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByHostResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationsByUserResponse;
@@ -60,14 +62,21 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateOne(@PathVariable Long id,
+    public ResponseEntity<Long> updateOne(final @PathVariable Long id,
         @Valid @RequestBody ReservationUpdateRequest updateRequest) throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.updateReservation(id, updateRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> removeOne(@PathVariable Long id) throws EntityNotFoundException {
+    public ResponseEntity<Long> removeOne(final @PathVariable Long id)
+        throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.deleteReservation(id));
+    }
+
+    @GetMapping("/checkDate/{roomId}")
+    public ResponseEntity<List<CheckDateResponse>> findAllCheckDate(
+        final @PathVariable Long roomId) {
+        return ResponseEntity.ok(reservationService.findAllCheckDate(roomId));
     }
 
 }

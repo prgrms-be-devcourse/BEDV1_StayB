@@ -1,8 +1,11 @@
 package org.programmers.staybb.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.programmers.staybb.domain.reservation.Reservation;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.User;
+import org.programmers.staybb.dto.Reservation.CheckDateResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByGuestResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByHostResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationsByUserResponse;
@@ -90,6 +93,12 @@ public class ReservationService {
         Reservation findReservation = validReservationId(id);
 
         return FindReservationByHostResponse.of(findReservation);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CheckDateResponse> findAllCheckDate(final Long roomId) {
+        return reservationRepository.findAllByRoomId(roomId)
+            .stream().map(CheckDateResponse::of).collect(Collectors.toList());
     }
 
     private User validUserId(Long userId) {
