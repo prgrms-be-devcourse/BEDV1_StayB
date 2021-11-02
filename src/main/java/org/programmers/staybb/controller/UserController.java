@@ -1,4 +1,5 @@
 package org.programmers.staybb.controller;
+
 import javax.validation.Valid;
 import org.programmers.staybb.dto.user.UserRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
