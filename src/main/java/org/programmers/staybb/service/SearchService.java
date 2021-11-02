@@ -3,6 +3,7 @@ package org.programmers.staybb.service;
 import javassist.NotFoundException;
 import org.programmers.staybb.dto.search.SearchAllResponse;
 import org.programmers.staybb.dto.search.SearchRequest;
+import org.programmers.staybb.dto.search.SearchRequestModel;
 import org.springframework.transaction.annotation.Transactional;
 import org.programmers.staybb.dto.search.SearchOneResponse;
 import org.programmers.staybb.repository.RoomRepository;

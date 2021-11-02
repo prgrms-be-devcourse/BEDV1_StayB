@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.programmers.staybb.domain.reservation.Guest;
 import org.programmers.staybb.domain.room.Address;
 import org.programmers.staybb.domain.room.Option;
 import org.programmers.staybb.domain.user.Host;
@@ -90,11 +91,18 @@ class SearchControllerTest {
         roomId = roomService.save(roomRequest);
     }
 
-
+    private String location;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Guest guest;
+    private Option option;
     @Test
     @DisplayName("Search getAll 테스트")
     void getAllTest() throws Exception{
         mockMvc.perform(get("/v1/search")
+                .param("location","서울")
+                .param("adult","1")
+                .param("bedNum","1")
                 .param("page", String.valueOf(0))
                 .param("size", String.valueOf(10))
                 .contentType(MediaType.APPLICATION_JSON))

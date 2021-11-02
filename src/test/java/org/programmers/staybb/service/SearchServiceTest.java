@@ -3,8 +3,6 @@ package org.programmers.staybb.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +16,7 @@ import org.programmers.staybb.dto.room.RoomRequest;
 import org.programmers.staybb.dto.search.SearchAllResponse;
 import org.programmers.staybb.dto.search.SearchOneResponse;
 import org.programmers.staybb.dto.search.SearchRequest;
+import org.programmers.staybb.dto.search.SearchRequestModel;
 import org.programmers.staybb.repository.HostRepository;
 import org.programmers.staybb.repository.RoomRepository;
 import org.programmers.staybb.repository.UserRepository;
@@ -142,17 +141,16 @@ class SearchServiceTest {
         //When
         Long savedRoomId = roomService.save(roomRequest);
         // Given
-        SearchRequest searchRequest = SearchRequest.builder()
-            .location("서울")
-            .startDate(null)
-            .endDate(null)
-            .guest(new Guest(1, 0 ,0))
-            .option(Option.builder()
-                .bedNum(2)
-                .bedroomNum(1)
-                .bathroomNum(1)
-                .build())
-            .build();
+        SearchRequestModel searchRequestModel = new SearchRequestModel();
+        searchRequestModel.setLocation("서울");
+        searchRequestModel.setAdult(1);
+        searchRequestModel.setTeen(0);
+        searchRequestModel.setKid(0);
+        searchRequestModel.setBedNum(2);
+        searchRequestModel.setBedroomNum(1);
+        searchRequestModel.setBathroomNum(1);
+
+        SearchRequest searchRequest = new SearchRequest(searchRequestModel);
         PageRequest page = PageRequest.of(0, 10);
         // When
         Page<SearchAllResponse> all = searchService.findByFilters(searchRequest, page);

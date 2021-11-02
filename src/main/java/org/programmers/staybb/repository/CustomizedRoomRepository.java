@@ -1,7 +1,5 @@
 package org.programmers.staybb.repository;
 
-import java.util.List;
-import java.util.Optional;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.dto.search.SearchRequest;
 import org.springframework.data.domain.Page;

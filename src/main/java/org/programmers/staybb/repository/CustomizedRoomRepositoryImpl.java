@@ -5,16 +5,14 @@ import static org.programmers.staybb.domain.room.QRoom.room;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import org.programmers.staybb.domain.reservation.Guest;
 import org.programmers.staybb.domain.room.Option;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.dto.search.SearchRequest;
+import org.programmers.staybb.dto.search.SearchRequestModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 
 public class CustomizedRoomRepositoryImpl implements CustomizedRoomRepository {
     private final JPAQueryFactory jpaQueryFactory;
