@@ -3,13 +3,13 @@ package org.programmers.staybb.dto.search;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.programmers.staybb.domain.reservation.Guest;
-import org.programmers.staybb.domain.room.Address;
 import org.programmers.staybb.domain.room.Option;
 import org.programmers.staybb.domain.room.Room;
-import org.programmers.staybb.domain.user.Host;
 
 @Getter
+@Setter
 public class SearchRequest {
     private String location;
     private LocalDate startDate;
@@ -17,13 +17,17 @@ public class SearchRequest {
     private Guest guest;
     private Option option;
 
-    @Builder
-    public SearchRequest(String location, LocalDate startDate, LocalDate endDate,
-        Guest guest, Option option) {
-        this.location = location;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.guest = guest;
-        this.option = option;
+    public SearchRequest(SearchRequestModel searchRequestModel) {
+        this.location = searchRequestModel.getLocation();
+        this.startDate = searchRequestModel.getStartDate();
+        this.endDate = searchRequestModel.getEndDate();
+        this.guest = new Guest(searchRequestModel.getAdult(),
+            searchRequestModel.getKid(),
+            searchRequestModel.getTeen());
+        this.option = Option.builder()
+            .bedNum(searchRequestModel.getBedNum())
+            .bedroomNum(searchRequestModel.getBedroomNum())
+            .bathroomNum(searchRequestModel.getBathroomNum())
+            .build();
     }
 }
