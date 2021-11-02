@@ -1,9 +1,10 @@
 package org.programmers.staybb.service;
 
-import javassist.NotFoundException;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.dto.room.RoomRequest;
+import org.programmers.staybb.global.exception.EntityNotFoundException;
+import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.HostRepository;
 import org.programmers.staybb.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,17 @@ public class RoomService {
         this.hostRepository = hostRepository;
     }
 
-    public Long save(final RoomRequest roomRequest) throws NotFoundException{
+    public Long save(final RoomRequest roomRequest) throws EntityNotFoundException {
         Host host = hostRepository.findById(roomRequest.getHostId())
-            .orElseThrow(() -> new NotFoundException("해당 host 정보가 없습니다."));
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND));
         return roomRepository.save(roomRequest.toEntity(host)).getId();
     }
 
-    public Long delete(final Long roomId) throws NotFoundException {
+    public Long delete(final Long roomId) throws EntityNotFoundException {
         Room room = roomRepository.findById(roomId)
-            .orElseThrow(() -> new NotFoundException("해당 숙소 정보가 없습니다."));
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
         roomRepository.delete(room);
         return roomId;
     }
+
 }
