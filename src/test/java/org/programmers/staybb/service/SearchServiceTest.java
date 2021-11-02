@@ -9,6 +9,7 @@ import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.programmers.staybb.domain.reservation.Guest;
 import org.programmers.staybb.domain.room.Address;
 import org.programmers.staybb.domain.room.Option;
 import org.programmers.staybb.domain.user.Host;
@@ -16,6 +17,7 @@ import org.programmers.staybb.domain.user.User;
 import org.programmers.staybb.dto.room.RoomRequest;
 import org.programmers.staybb.dto.search.SearchAllResponse;
 import org.programmers.staybb.dto.search.SearchOneResponse;
+import org.programmers.staybb.dto.search.SearchRequest;
 import org.programmers.staybb.repository.HostRepository;
 import org.programmers.staybb.repository.RoomRepository;
 import org.programmers.staybb.repository.UserRepository;
@@ -41,6 +43,10 @@ class SearchServiceTest {
 
     @BeforeEach
     void setUp() throws NotFoundException {
+    }
+
+    @Test
+    void findOneTest() throws NotFoundException {
         //Given
         //User 등록
         User user = User.builder()
@@ -83,10 +89,6 @@ class SearchServiceTest {
 
         //When
         Long savedRoomId = roomService.save(roomRequest);
-    }
-
-    @Test
-    void findOneTest() throws NotFoundException {
         // Given
         Long id = 3L;
         // When
@@ -96,11 +98,64 @@ class SearchServiceTest {
     }
 
     @Test
-    void findAllTest() {
+    void findAllTest() throws NotFoundException{
+        //Given
+        //User 등록
+        User user = User.builder()
+            .name("변민지")
+            .birthday(LocalDate.of(1996,01,01))
+            .email("bnminji@gmail.com")
+            .phoneNumber("01050483601")
+            .bio("변민지입니다")
+            .build();
+        userRepository.save(user);
+
+        //Host 등록
+        Host host = Host.builder()
+            .user(user)
+            .build();
+        hostRepository.save(host);
+
+        ////
+        Long hostId = 2L;
+        //Room 등록1
+        RoomRequest roomRequest = RoomRequest.builder()
+            .hostId(hostId)
+            .roomName("beautiful apt in Seoul")
+            .maxGuest(2)
+            .price(20000)
+            .description("visit and enjoy beautiful apt in Seoul!")
+            .option(Option.builder()
+                .bedNum(2)
+                .bedroomNum(1)
+                .bathroomNum(1)
+                .build()
+            )
+            .address(Address.builder()
+                .region("서울")
+                .address("서울 중구 세종대로 110")
+                .detail_address("11")
+                .build()
+            )
+            .build();
+
+        //When
+        Long savedRoomId = roomService.save(roomRequest);
         // Given
+        SearchRequest searchRequest = SearchRequest.builder()
+            .location("서울")
+            .startDate(null)
+            .endDate(null)
+            .guest(new Guest(1, 0 ,0))
+            .option(Option.builder()
+                .bedNum(2)
+                .bedroomNum(1)
+                .bathroomNum(1)
+                .build())
+            .build();
         PageRequest page = PageRequest.of(0, 10);
         // When
-        Page<SearchAllResponse> all = searchService.findAll(page);
+        Page<SearchAllResponse> all = searchService.findByFilters(searchRequest, page);
         // Then
         assertThat(all.getTotalElements()).isEqualTo(1L);
     }
