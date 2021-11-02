@@ -84,7 +84,7 @@ class RoomServiceTest {
             .address(Address.builder()
                 .region("서울")
                 .address("서울 중구 세종대로 110")
-                .detail_address("11")
+                .detailAddress("11")
                 .build()
             )
             .build();
