@@ -4,9 +4,13 @@ import javassist.NotFoundException;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.dto.room.RoomRequest;
+import org.programmers.staybb.global.exception.EntityNotFoundException;
+import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.HostRepository;
 import org.programmers.staybb.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,5 +38,21 @@ public class RoomService {
             .orElseThrow(() -> new NotFoundException("해당 숙소 정보가 없습니다."));
         roomRepository.delete(room);
         return roomId;
+    }
+
+    @Transactional(readOnly = true)
+    public Room find(final Long roomId) throws EntityNotFoundException{
+        Room room = roomRepository.findById(roomId)
+            .orElseThrow(()-> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
+        return room;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Room> findAllByHostId(final Long hostId, final Pageable pageable) {
+        Page<Room> roomPage= roomRepository.findAllByHostId(hostId, pageable);
+        System.out.println(roomPage+"n\n\n\n\nnnn\nn\n");
+        System.out.println(roomPage);
+        roomPage.stream().map(entity->entity.getId()).forEach(System.out::println);
+        return roomPage;
     }
 }
