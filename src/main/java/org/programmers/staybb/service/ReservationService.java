@@ -53,7 +53,8 @@ public class ReservationService {
         return findReservation.getId();
     }
 
-    public Long createReservation(final ReservationSaveRequest saveRequest) {
+    public Long createReservation(final ReservationSaveRequest saveRequest)
+        throws EntityNotFoundException {
         User user = validUserId(saveRequest.getUserId());
 
         Room room = roomRepository.findById(saveRequest.getRoomId())
@@ -101,12 +102,12 @@ public class ReservationService {
             .stream().map(CheckDateResponse::of).collect(Collectors.toList());
     }
 
-    private User validUserId(Long userId) {
+    private User validUserId(Long userId) throws EntityNotFoundException {
         return userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
-    private Reservation validReservationId(Long reservationId) {
+    private Reservation validReservationId(Long reservationId) throws EntityNotFoundException {
         return reservationRepository.findById(reservationId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.RESERVATION_NOT_FOUND));
     }
