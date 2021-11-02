@@ -27,7 +27,7 @@ public class HostService {
         this.hostRepository = hostRepository;
     }
 
-    public Long addHost(final Long userId) throws EntityNotFoundException {
+    public Long addHost(final Long userId) {
         User findUser = validUserId(userId);
         Host host = Host.builder()
             .user(findUser)
@@ -36,7 +36,7 @@ public class HostService {
     }
 
     @Transactional(readOnly = true)
-    public HostResponse findHost(final Long hostId) throws EntityNotFoundException {
+    public HostResponse findHost(final Long hostId) {
         Host findHost = validHostId(hostId);
 
         List<Long> roomIds = findHost.getRooms().stream().map(Room::getId)
@@ -57,15 +57,14 @@ public class HostService {
         return host.getUser().getId();
     }
 
-    private User validUserId(Long userId) {
+    private User validUserId(Long userId) throws EntityNotFoundException {
         return userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
-    private Host validHostId(Long hostId) {
+    private Host validHostId(Long hostId) throws EntityNotFoundException {
         return hostRepository.findById(hostId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.HOST_NOT_FOUND));
     }
-
 
 }
