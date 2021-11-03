@@ -1,7 +1,6 @@
 package org.programmers.staybb.controller;
 
 import java.util.Map;
-import javassist.NotFoundException;
 import javax.validation.Valid;
 import org.programmers.staybb.dto.room.RoomDetailResponse;
 import org.programmers.staybb.dto.room.RoomRequest;
@@ -39,13 +38,13 @@ public class RoomController {
 
     @DeleteMapping("/{roomId}")
     public ResponseEntity<Long> delete(final @PathVariable Long roomId)
-        throws NotFoundException {
+        throws EntityNotFoundException {
         return ResponseEntity.ok(roomService.delete(roomId));
     }
 
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomDetailResponse> find(final @PathVariable Long roomId)
-        throws NotFoundException {
+        throws EntityNotFoundException {
         return ResponseEntity.ok(RoomDetailResponse.of(roomService.find(roomId)));
     }
 
