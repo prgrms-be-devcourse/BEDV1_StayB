@@ -1,6 +1,7 @@
 package org.programmers.staybb.global.exception;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
@@ -9,7 +10,9 @@ public enum ErrorCode {
     HOST_NOT_FOUND(404, "해당 호스트를 찾을 수 없습니다."),
     ROOM_NOT_FOUND(404, "해당 숙소를 찾을 수 없습니다."),
     RESERVATION_NOT_FOUND(404, "해당 예약을 찾을 수 없습니다."),
-    INVALID_INPUT_VALUE(400, "입력값을 다시 확인해주세요.");
+    INVALID_INPUT_VALUE(400, "입력값을 다시 확인해주세요."),
+    IllegalAccessException(400, "해당 정보를 수정할 권한이 없습니다."),
+    NoSuchFieldException(400, "유효하지 않은 필드는 수정할 수 없습니다.");
 
     private final int status;
 
