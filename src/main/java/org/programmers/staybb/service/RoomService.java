@@ -1,5 +1,6 @@
 package org.programmers.staybb.service;
 
+import java.util.Map;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.dto.room.RoomRequest;
@@ -40,17 +41,28 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public Room find(final Long roomId) throws EntityNotFoundException{
+    public Room find(final Long roomId) throws EntityNotFoundException {
         Room room = roomRepository.findById(roomId)
-            .orElseThrow(()-> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
         return room;
     }
 
     @Transactional(readOnly = true)
     public Page<Room> findAllByHostId(final Long hostId, final Pageable pageable) {
-        Page<Room> roomPage= roomRepository.findAllByHostId(hostId, pageable);
-        roomPage.stream().map(entity->entity.getId()).forEach(System.out::println);
+        Page<Room> roomPage = roomRepository.findAllByHostId(hostId, pageable);
         return roomPage;
     }
 
+    @Transactional
+    public Long updateSingleField(Long roomId, Map<String, Object> updateInfo)
+        throws NoSuchFieldException, IllegalAccessException, EntityNotFoundException {
+        Room room = roomRepository.findById(roomId)
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
+
+        String fieldToChange = updateInfo.keySet().toArray()[0].toString();
+        System.out.println(fieldToChange);
+        room.setField(fieldToChange, updateInfo.get(fieldToChange));
+
+        return room.getId();
+    }
 }
