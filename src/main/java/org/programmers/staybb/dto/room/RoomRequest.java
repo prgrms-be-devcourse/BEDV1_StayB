@@ -36,7 +36,7 @@ public class RoomRequest {
 
     @AddressValid
     @NotNull
-    private Address address;
+    private final Address address;
 
     @Builder
     public RoomRequest(Long hostId, String roomName, int maxGuest, int price, String description,

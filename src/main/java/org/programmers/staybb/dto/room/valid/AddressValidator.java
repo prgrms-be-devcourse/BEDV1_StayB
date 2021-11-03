@@ -18,12 +18,14 @@ public class AddressValidator implements ConstraintValidator<AddressValid, Addre
 
         //시 구(군) 동(읍) regex 작성필요
         if (address.getAddress().isBlank()) {
+            constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
                 "주소는 시, 구(군), 동(읍) 으로 입력하세요.").addConstraintViolation();
             return false;
         }
 
-        if (address.getDetail_address().isBlank()) {
+        if (address.getDetailAddress().isBlank()) {
+            constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate("상세주소를 입력하세요.")
                 .addConstraintViolation();
             return false;

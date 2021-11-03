@@ -18,16 +18,16 @@ public class Address {
     private String address;
 
     @NotNull
-    private String detail_address;
+    private String detailAddress;
 
     protected Address() {
     }
 
     @Builder
-    public Address(String region, String address, String detail_address) {
+    public Address(String region, String address, String detailAddress) {
         this.region = region;
         this.address = address;
-        this.detail_address = detail_address;
+        this.detailAddress = detailAddress;
     }
 
     @Override
@@ -40,12 +40,12 @@ public class Address {
         }
         Address address1 = (Address) o;
         return Objects.equals(region, address1.region) && Objects.equals(address, address1.address)
-            && Objects.equals(detail_address, address1.detail_address);
+            && Objects.equals(detailAddress, address1.detailAddress);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(region, address, detail_address);
+        return Objects.hash(region, address, detailAddress);
     }
 
 }
