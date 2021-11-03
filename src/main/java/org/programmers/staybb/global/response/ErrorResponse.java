@@ -35,7 +35,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(final ErrorCode errorCode) {
         return ErrorResponse.builder().code(errorCode).build();
+    }
 
+    public static ErrorResponse of(final ErrorCode errorCode, String errorMsg) {
+        return ErrorResponse.builder().code(errorCode).build();
     }
 
     public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
