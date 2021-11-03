@@ -53,7 +53,7 @@ public class RoomController {
         Pageable pageable) {
         return ResponseEntity.ok(
             roomService.findAllByHostId(hostId, pageable)
-                .map(entity -> RoomResponse.of(entity)));
+                .map(RoomResponse::of));
     }
 
     @PatchMapping("/{roomId}")
