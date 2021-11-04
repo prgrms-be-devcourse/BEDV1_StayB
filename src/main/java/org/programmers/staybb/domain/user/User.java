@@ -1,6 +1,7 @@
 package org.programmers.staybb.domain.user;
 
 import com.sun.istack.NotNull;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,13 +54,10 @@ public class User extends BaseTimeEntity {
         this.bio = bio;
     }
 
-    public void changeInfo(String name, LocalDate birthday, String email, String phoneNumber,
-        String bio) {
-        this.name = name;
-        this.birthday = birthday;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.bio = bio;
+    public void setField(String fieldToChange, Object value)
+        throws IllegalAccessException, NoSuchFieldException {
+        Field field = this.getClass().getDeclaredField(fieldToChange);
+        field.set(this, value);
     }
 
 }
