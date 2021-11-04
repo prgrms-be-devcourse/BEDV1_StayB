@@ -42,21 +42,21 @@ public class ReservationController {
 
     @GetMapping("/guest/{id}")
     public ResponseEntity<FindReservationByGuestResponse> findOneByGuest(
-        final @PathVariable long reservationId)
+        final @PathVariable Long reservationId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.findOneByUser(reservationId));
     }
 
     @GetMapping("/host/{id}")
     public ResponseEntity<FindReservationByHostResponse> findOneByHost(
-        final @PathVariable long reservationId)
+        final @PathVariable Long reservationId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.findOneByHost(reservationId));
     }
 
     @GetMapping
     public ResponseEntity<Page<FindReservationsByUserResponse>> findAllByUser(
-        final @PathVariable long userId, Pageable pageable)
+        final @PathVariable Long userId, Pageable pageable)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.findAllByUser(userId, pageable));
     }
