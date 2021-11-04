@@ -44,7 +44,12 @@ public class ReservationService {
     public ReservationIdResponse updateReservation(final Long id,
         final ReservationUpdateRequest updateRequest) throws OverCrowdingException {
         Reservation findReservation = validateReservationId(id);
-        
+
+        if (findReservation.getRoom().getMaxGuest() < updateRequest.getGuestRequest().toEntity()
+            .getTotalGuest()) {
+            throw new OverCrowdingException(ErrorCode.OVER_CROWDING);
+        }
+
         findReservation.changeInfo(updateRequest.getStartDate(), updateRequest.getEndDate(),
             updateRequest.getGuestRequest().toEntity());
 
@@ -52,11 +57,15 @@ public class ReservationService {
     }
 
     public ReservationIdResponse createReservation(final ReservationSaveRequest saveRequest)
-        throws EntityNotFoundException {
+        throws EntityNotFoundException, OverCrowdingException {
         User user = validateUserId(saveRequest.getUserId());
 
         Room room = roomRepository.findById(saveRequest.getRoomId())
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
+
+        if (room.getMaxGuest() < saveRequest.getGuestRequest().toEntity().getTotalGuest()) {
+            throw new OverCrowdingException(ErrorCode.OVER_CROWDING);
+        }
 
         Reservation savedReservation = reservationRepository.save(saveRequest.toEntity(user, room));
 

@@ -10,6 +10,7 @@ import org.programmers.staybb.dto.Reservation.ReservationIdResponse;
 import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
+import org.programmers.staybb.global.exception.OverCrowdingException;
 import org.programmers.staybb.service.ReservationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<ReservationIdResponse> createReservation(
         final @Valid @RequestBody ReservationSaveRequest saveRequest)
-        throws EntityNotFoundException {
+        throws EntityNotFoundException, OverCrowdingException {
         return ResponseEntity.ok(reservationService.createReservation(saveRequest));
     }
 
@@ -64,7 +65,8 @@ public class ReservationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ReservationIdResponse> updateOne(final @PathVariable Long id,
-        final @Valid @RequestBody ReservationUpdateRequest updateRequest) throws EntityNotFoundException {
+        final @Valid @RequestBody ReservationUpdateRequest updateRequest)
+        throws EntityNotFoundException, OverCrowdingException {
         return ResponseEntity.ok(reservationService.updateReservation(id, updateRequest));
     }
 

@@ -28,8 +28,16 @@ public class GlobalException {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(OverCrowdingException.class)
+    public ResponseEntity<ErrorResponse> overCrowdingHandler(OverCrowdingException e) {
+        log.error("OverCrowdingException", e);
+        final ErrorResponse response = ErrorResponse.of(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(IllegalAccessException.class)
-    protected ResponseEntity<ErrorResponse> illegalAccessExceptionHandler(IllegalAccessException e) {
+    protected ResponseEntity<ErrorResponse> illegalAccessExceptionHandler(
+        IllegalAccessException e) {
         log.error("IllegalAccessException", e.getMessage());
         final ErrorResponse response = ErrorResponse.of(ErrorCode.IllegalAccessException);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
