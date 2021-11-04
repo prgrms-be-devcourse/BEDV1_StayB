@@ -10,8 +10,8 @@ import org.programmers.staybb.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @Transactional
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
