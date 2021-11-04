@@ -21,8 +21,8 @@ import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.global.BaseTimeEntity;
 
 @Getter
-@Entity
 @Table(name = "room")
+@Entity
 public class Room extends BaseTimeEntity {
 
     @Id

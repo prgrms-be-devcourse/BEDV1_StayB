@@ -7,8 +7,8 @@ import lombok.Getter;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
-@Embeddable
 @Getter
+@Embeddable
 public class Address {
 
     @NotNull
