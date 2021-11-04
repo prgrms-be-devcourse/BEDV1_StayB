@@ -3,7 +3,9 @@ package org.programmers.staybb.service;
 import java.util.Map;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
+import org.programmers.staybb.dto.room.RoomDetailResponse;
 import org.programmers.staybb.dto.room.RoomRequest;
+import org.programmers.staybb.dto.room.RoomSummaryResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.HostRepository;
@@ -41,16 +43,16 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public Room find(final Long roomId) throws EntityNotFoundException {
+    public RoomDetailResponse find(final Long roomId) throws EntityNotFoundException {
         Room room = roomRepository.findById(roomId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
-        return room;
+        return RoomDetailResponse.of(room);
     }
 
     @Transactional(readOnly = true)
-    public Page<Room> findAllByHostId(final Long hostId, final Pageable pageable) {
+    public Page<RoomSummaryResponse> findAllByHostId(final Long hostId, final Pageable pageable) {
         Page<Room> roomPage = roomRepository.findAllByHostId(hostId, pageable);
-        return roomPage;
+        return roomPage.map(RoomSummaryResponse::of);
     }
 
     @Transactional
@@ -60,7 +62,6 @@ public class RoomService {
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         String fieldToChange = updateInfo.keySet().toArray()[0].toString();
-        System.out.println(fieldToChange);
         room.setField(fieldToChange, updateInfo.get(fieldToChange));
 
         return room.getId();
