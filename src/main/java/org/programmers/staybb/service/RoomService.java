@@ -39,7 +39,7 @@ public class RoomService {
         Room room = roomRepository.findById(roomId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
         roomRepository.delete(room);
-        return roomId;
+        return room.getId();
     }
 
     @Transactional(readOnly = true)
