@@ -68,16 +68,6 @@ public class Room extends BaseTimeEntity {
         this.price = price;
     }
 
-    public void changeInfo(String roomName, Address address, int maxGuest, Option option,
-        String description, int price) {
-        this.roomName = roomName;
-        this.address = address;
-        this.maxGuest = maxGuest;
-        this.option = option;
-        this.description = description;
-        this.price = price;
-    }
-
     public void addRoom(Host host) {
         host.getRooms().add(this);
         this.host = host;
