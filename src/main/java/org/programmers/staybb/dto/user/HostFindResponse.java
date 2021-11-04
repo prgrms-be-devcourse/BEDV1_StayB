@@ -8,7 +8,7 @@ import org.programmers.staybb.domain.user.Host;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
-public class HostResponse {
+public class HostFindResponse {
 
     private final String name;
 
@@ -16,8 +16,8 @@ public class HostResponse {
 
     private final List<Long> roomIds;
 
-    public static HostResponse of(Host entity, String userName, List<Long> roomIds) {
-        return HostResponse.builder()
+    public static HostFindResponse of(Host entity, String userName, List<Long> roomIds) {
+        return HostFindResponse.builder()
             .name(userName)
             .isSuperhost(entity.is_superHost())
             .roomIds(roomIds)

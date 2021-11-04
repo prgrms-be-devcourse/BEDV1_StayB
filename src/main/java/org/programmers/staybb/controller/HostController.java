@@ -1,7 +1,7 @@
 package org.programmers.staybb.controller;
 
+import org.programmers.staybb.dto.user.HostFindResponse;
 import org.programmers.staybb.dto.user.HostIdResponse;
-import org.programmers.staybb.dto.user.HostResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.service.HostService;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class HostController {
     }
 
     @GetMapping("/{hostId}")
-    public ResponseEntity<HostResponse> getHost(final @PathVariable Long hostId)
+    public ResponseEntity<HostFindResponse> getHost(final @PathVariable Long hostId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(hostService.findHost(hostId));
     }

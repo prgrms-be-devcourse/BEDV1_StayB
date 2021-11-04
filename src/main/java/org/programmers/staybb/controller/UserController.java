@@ -27,15 +27,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserIdResponse> signUp(
+    public ResponseEntity<UserIdResponse> createUser(
         final @RequestBody @Valid UserRequest userRequest) {
-        return ResponseEntity.ok(userService.addUser(userRequest));
+        return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserIdResponse> removeUser(final @PathVariable Long id)
+    public ResponseEntity<UserIdResponse> deleteUser(final @PathVariable Long id)
         throws EntityNotFoundException {
-        return ResponseEntity.ok(userService.removeUser(id));
+        return ResponseEntity.ok(userService.deleteUser(id));
     }
 
     @PatchMapping("/{id}")
