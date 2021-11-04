@@ -1,18 +1,21 @@
 package org.programmers.staybb.domain.user;
 
 import com.sun.istack.NotNull;
-import lombok.AccessLevel;
+import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.programmers.staybb.global.BaseTimeEntity;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-
-@Entity
-@Table(name = "user")
 @Getter
+@Table(name = "user")
+@Entity
 public class User extends BaseTimeEntity {
 
     @Id

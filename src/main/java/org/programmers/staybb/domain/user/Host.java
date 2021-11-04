@@ -9,8 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import org.programmers.staybb.domain.room.Room;
 
-@Entity
 @Getter
+@Entity
 public class Host {
 
     @Id
