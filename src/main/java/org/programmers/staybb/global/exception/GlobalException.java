@@ -28,4 +28,17 @@ public class GlobalException {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalAccessException.class)
+    protected ResponseEntity<ErrorResponse> illegalAccessExceptionHandler(IllegalAccessException e) {
+        log.error("IllegalAccessException", e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.IllegalAccessException);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchFieldException.class)
+    protected ResponseEntity<ErrorResponse> noSuchFieldException(NoSuchFieldException e) {
+        log.error("NoSuchFieldException", e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.NoSuchFieldException);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

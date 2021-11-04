@@ -2,6 +2,7 @@ package org.programmers.staybb.controller.room;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -10,8 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,7 +144,7 @@ class RoomControllerTest {
             .andDo(print());
     }
 
-    @DisplayName("호스트가 등록한 숙소의 아이디로 숙소 정보를 조회할 수 있다.")
+    @DisplayName("호스트는 본인이 등록한 숙소의 아이디로 숙소 정보를 조회할 수 있다.")
     @Test
     void find() throws Exception {
         Room room = roomList.get(0);
@@ -159,7 +162,7 @@ class RoomControllerTest {
             .andDo(print());
     }
 
-    @DisplayName("호스트가 등록한 숙소 리스트를 페이지 단위로 조회할 수 있다.")
+    @DisplayName("호스트는 본인이 등록한 숙소 리스트를 페이지 단위로 조회할 수 있다.")
     @Test
     void findAll() throws Exception {
         mockMvc.perform(
@@ -169,4 +172,27 @@ class RoomControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.numberOfElements").value(roomList.size()));
     }
+
+    @DisplayName("호스트는 본인이 등록한 숙소의 정보를 요청 1회당 1개의 필드를 변경할 수 있다.")
+    @Test
+    void updateSingleField() throws Exception {
+        Map<String, Object> updateInfo = new HashMap<>();
+        updateInfo.put("roomName", "ABC아파트");
+        mockMvc.perform(
+                patch("/v1/rooms/3").contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(updateInfo)))
+            .andExpect(status().isOk());
+    }
+
+    @DisplayName("숙소 정보 변경시 Room Entity 필드에 없는 정보는 수정할 수 없다.")
+    @Test
+    void updateInvalidField() throws Exception {
+        Map<String, Object> updateInvalidInfo = new HashMap<>();
+        updateInvalidInfo.put("roomName22", "ABC아파트");
+        mockMvc.perform(
+                patch("/v1/rooms/3").contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(updateInvalidInfo)))
+            .andExpect(status().isOk());
+    }
+
 }

@@ -1,6 +1,6 @@
 package org.programmers.staybb.controller;
 
-import javassist.NotFoundException;
+import java.util.Map;
 import javax.validation.Valid;
 import org.programmers.staybb.dto.room.RoomDetailResponse;
 import org.programmers.staybb.dto.room.RoomRequest;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,16 +32,17 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity<Long> save(final @RequestBody @Valid RoomRequest roomRequest)
-        throws NotFoundException {
+        throws EntityNotFoundException {
         return ResponseEntity.ok(roomService.save(roomRequest));
     }
 
     @DeleteMapping("/{roomId}")
-    public ResponseEntity<Long> delete(final @PathVariable Long roomId) throws NotFoundException {
+    public ResponseEntity<Long> delete(final @PathVariable Long roomId)
+        throws EntityNotFoundException {
         return ResponseEntity.ok(roomService.delete(roomId));
     }
 
-    @GetMapping("/host/{roomId}")
+    @GetMapping("/{roomId}")
     public ResponseEntity<RoomDetailResponse> find(final @PathVariable Long roomId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(RoomDetailResponse.of(roomService.find(roomId)));
@@ -51,8 +53,14 @@ public class RoomController {
         Pageable pageable) {
         return ResponseEntity.ok(
             roomService.findAllByHostId(hostId, pageable)
-                .map(entity -> RoomResponse.of(entity)));
+                .map(RoomResponse::of));
     }
 
+    @PatchMapping("/{roomId}")
+    public ResponseEntity<Long> updateSingleField(final @PathVariable("roomId") Long roomId,
+        final @RequestBody Map<String, Object> updateInfo)
+        throws NoSuchFieldException, IllegalAccessException, EntityNotFoundException {
+        return ResponseEntity.ok(roomService.updateSingleField(roomId, updateInfo));
+    }
 
 }
