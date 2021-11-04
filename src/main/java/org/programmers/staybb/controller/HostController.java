@@ -1,5 +1,6 @@
 package org.programmers.staybb.controller;
 
+import org.programmers.staybb.dto.user.HostIdResponse;
 import org.programmers.staybb.dto.user.HostResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.service.HostService;
@@ -21,7 +22,7 @@ public class HostController {
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<Long> addHost(final @PathVariable Long userId)
+    public ResponseEntity<HostIdResponse> addHost(final @PathVariable Long userId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(hostService.addHost(userId));
     }
