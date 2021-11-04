@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.domain.user.User;
+import org.programmers.staybb.dto.user.HostIdResponse;
 import org.programmers.staybb.dto.user.HostResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.global.exception.ErrorCode;
@@ -18,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HostService {
 
     private final UserRepository userRepository;
-
     private final HostRepository hostRepository;
 
     public HostService(UserRepository userRepository,
@@ -27,12 +27,12 @@ public class HostService {
         this.hostRepository = hostRepository;
     }
 
-    public Long addHost(final Long userId) {
+    public HostIdResponse addHost(final Long userId) {
         User findUser = validUserId(userId);
         Host host = Host.builder()
             .user(findUser)
             .build();
-        return hostRepository.save(host).getId();
+        return new HostIdResponse(hostRepository.save(host).getId());
     }
 
     @Transactional(readOnly = true)
