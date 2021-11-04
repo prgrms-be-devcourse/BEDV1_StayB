@@ -27,5 +27,6 @@ public class RoomSummaryResponse {
             .updatedAt(entity.getUpdatedAt())
             .build();
     }
+
 }
 
