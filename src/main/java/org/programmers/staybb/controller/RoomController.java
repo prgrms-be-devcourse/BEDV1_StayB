@@ -49,7 +49,8 @@ public class RoomController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RoomSummaryResponse>> findAll(final @RequestParam("hostId") Long hostId,
+    public ResponseEntity<Page<RoomSummaryResponse>> findAll(
+        final @RequestParam("hostId") Long hostId,
         Pageable pageable) {
         return ResponseEntity.ok(
             roomService.findAllByHostId(hostId, pageable)
