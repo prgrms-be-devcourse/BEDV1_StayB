@@ -4,7 +4,7 @@ import java.util.Map;
 import javax.validation.Valid;
 import org.programmers.staybb.dto.room.RoomDetailResponse;
 import org.programmers.staybb.dto.room.RoomRequest;
-import org.programmers.staybb.dto.room.RoomResponse;
+import org.programmers.staybb.dto.room.RoomSummaryResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.service.RoomService;
 import org.springframework.data.domain.Page;
@@ -45,15 +45,15 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomDetailResponse> find(final @PathVariable Long roomId)
         throws EntityNotFoundException {
-        return ResponseEntity.ok(RoomDetailResponse.of(roomService.find(roomId)));
+        return ResponseEntity.ok(roomService.find(roomId));
     }
 
     @GetMapping
-    public ResponseEntity<Page<RoomResponse>> findAll(final @RequestParam("hostId") Long hostId,
+    public ResponseEntity<Page<RoomSummaryResponse>> findAll(final @RequestParam("hostId") Long hostId,
         Pageable pageable) {
         return ResponseEntity.ok(
             roomService.findAllByHostId(hostId, pageable)
-                .map(RoomResponse::of));
+        );
     }
 
     @PatchMapping("/{roomId}")
