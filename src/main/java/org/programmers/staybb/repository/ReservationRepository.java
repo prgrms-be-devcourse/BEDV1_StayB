@@ -1,6 +1,5 @@
 package org.programmers.staybb.repository;
 
-
 import java.util.List;
 import org.programmers.staybb.domain.reservation.Reservation;
 import org.springframework.data.domain.Page;
