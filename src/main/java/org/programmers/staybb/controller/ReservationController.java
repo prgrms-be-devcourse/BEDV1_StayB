@@ -71,7 +71,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ReservationIdResponse> removeOne(final @PathVariable Long id)
+    public ResponseEntity<ReservationIdResponse> deleteReservation(final @PathVariable Long id)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.deleteReservation(id));
     }
