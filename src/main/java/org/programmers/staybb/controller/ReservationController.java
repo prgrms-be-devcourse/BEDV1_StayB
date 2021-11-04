@@ -6,6 +6,7 @@ import org.programmers.staybb.dto.Reservation.CheckDateResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByGuestResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByHostResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationsByUserResponse;
+import org.programmers.staybb.dto.Reservation.ReservationIdResponse;
 import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
@@ -34,7 +35,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createReservation(
+    public ResponseEntity<ReservationIdResponse> createReservation(
         final @Valid @RequestBody ReservationSaveRequest saveRequest)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.createReservation(saveRequest));
@@ -62,13 +63,13 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateOne(final @PathVariable Long id,
+    public ResponseEntity<ReservationIdResponse> updateOne(final @PathVariable Long id,
         final @Valid @RequestBody ReservationUpdateRequest updateRequest) throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.updateReservation(id, updateRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> removeOne(final @PathVariable Long id)
+    public ResponseEntity<ReservationIdResponse> removeOne(final @PathVariable Long id)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.deleteReservation(id));
     }
