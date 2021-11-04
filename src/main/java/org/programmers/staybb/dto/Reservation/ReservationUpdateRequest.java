@@ -25,8 +25,10 @@ public class ReservationUpdateRequest {
 
     @Positive(message = "성인은 1명 이상이어야 합니다.")
     private final int adult;
+
     @PositiveOrZero(message = "다시 입력해 주세요")
     private final int teen;
+
     @PositiveOrZero(message = "다시 입력해 주세요")
     private final int child;
 
