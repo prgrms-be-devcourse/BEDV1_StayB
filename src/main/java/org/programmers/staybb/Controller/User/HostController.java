@@ -1,4 +1,4 @@
-package org.programmers.staybb.Controller.User;
+package org.programmers.staybb.controller.user;
 
 import org.programmers.staybb.dto.user.HostResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;

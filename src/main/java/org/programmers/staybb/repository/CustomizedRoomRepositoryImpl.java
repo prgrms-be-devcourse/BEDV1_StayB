@@ -1,7 +1,11 @@
 package org.programmers.staybb.repository;
 
+import static org.programmers.staybb.domain.reservation.QReservation.reservation;
 import static org.programmers.staybb.domain.room.QRoom.room;
 
+import com.querydsl.core.types.CollectionExpression;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,21 +25,29 @@ public class CustomizedRoomRepositoryImpl implements CustomizedRoomRepository {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    private String location;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Guest guest;
-    private Option option;
-
+    private Predicate dateBtw(LocalDate startDate, LocalDate endDate) {
+        if(startDate == null || endDate == null) return null;
+        return room.id.notIn(
+            JPAExpressions.select(reservation.room.id)
+                .from(reservation)
+                .where(
+                    (reservation.startDate.goe(startDate).and(reservation.startDate.lt(endDate)))
+                        .or(reservation.startDate.loe(startDate).and(reservation.endDate.gt(startDate)))
+                )
+        );
+    }
     @Override
     public Page<Room> findByFiltersOrderByCreatedAt(final SearchRequest searchRequest, Pageable pageable) {
 
         List<Room> rooms = jpaQueryFactory.selectFrom(room)
-            .where(room.address.address.contains(searchRequest.getLocation()),
-                room.maxGuest.goe(searchRequest.getGuest().getTotalGuest()),
-                room.option.bedNum.goe(searchRequest.getOption().getBedNum()),
-                room.option.bedroomNum.goe(searchRequest.getOption().getBedroomNum()),
-                room.option.bathroomNum.goe(searchRequest.getOption().getBathroomNum()))
+            .where(
+                dateBtw(searchRequest.getStartDate(), searchRequest.getEndDate()),
+                addressCtn(searchRequest.getLocation()),
+                maxGuestGoe(searchRequest.getGuest().getTotalGuest()),
+                bedNumGoe(searchRequest.getOption().getBedNum()),
+                bedroomNumGoe(searchRequest.getOption().getBedNum()),
+                bathroomNumGoe(searchRequest.getOption().getBathroomNum())
+                )
             .orderBy(room.createdAt.desc())
             .fetch();
 
@@ -47,10 +59,28 @@ public class CustomizedRoomRepositoryImpl implements CustomizedRoomRepository {
     }
 
 
-//    @Override
-//    public Optional<Room> findByRegion(final String region) {
-//        return Optional.of(jpaQueryFactory.selectFrom(room)
-//            .where(room.address.region.eq(region))
-//            .fetchOne());
-//    }
+    private Predicate addressCtn(final String location) {
+        if (location == null) return null;
+        return room.address.address.contains(location);
+    }
+
+    private Predicate maxGuestGoe(final int totalGuest) {
+        if (totalGuest == 0) return null;
+        return room.maxGuest.goe(totalGuest);
+    }
+
+    private Predicate bedNumGoe(final int bedNum) {
+        if (bedNum == 0) return null;
+        return room.maxGuest.goe(bedNum);
+    }
+
+    private Predicate bedroomNumGoe(final int bathroomNum) {
+        if (bathroomNum == 0) return null;
+        return room.maxGuest.goe(bathroomNum);
+    }
+
+    private Predicate bathroomNumGoe(final double bathroomNum) {
+        if (bathroomNum == 0) return null;
+        return room.maxGuest.goe(bathroomNum);
+    }
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RequestMapping("/v1/search")
 @Slf4j
 @RestController
 public class SearchController {
@@ -30,8 +29,8 @@ public class SearchController {
         return ResponseEntity.ok(searchService.findByFilters(searchRequest, pageable));
     }
 
-    @GetMapping("/v1/search/{id}")
-    public ResponseEntity<SearchOneResponse> getOne(final @PathVariable Long id) throws NotFoundException {
-        return ResponseEntity.ok(searchService.findOne(id));
+    @GetMapping("/v1/search/rooms/{roomId}")
+    public ResponseEntity<SearchOneResponse> getOne(final @PathVariable Long roomId) throws NotFoundException {
+        return ResponseEntity.ok(searchService.findOne(roomId));
     }
 }
