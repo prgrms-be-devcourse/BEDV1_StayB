@@ -21,8 +21,8 @@ import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.global.BaseTimeEntity;
 
 @Getter
-@Entity
 @Table(name = "room")
+@Entity
 public class Room extends BaseTimeEntity {
 
     @Id
@@ -65,16 +65,6 @@ public class Room extends BaseTimeEntity {
         this.option = option;
         this.description = description;
         addRoom(host);
-        this.price = price;
-    }
-
-    public void changeInfo(String roomName, Address address, int maxGuest, Option option,
-        String description, int price) {
-        this.roomName = roomName;
-        this.address = address;
-        this.maxGuest = maxGuest;
-        this.option = option;
-        this.description = description;
         this.price = price;
     }
 

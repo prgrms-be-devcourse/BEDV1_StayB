@@ -9,6 +9,7 @@ import org.programmers.staybb.dto.Reservation.CheckDateResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByGuestResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByHostResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationsByUserResponse;
+import org.programmers.staybb.dto.Reservation.ReservationIdResponse;
 import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
@@ -22,60 +23,57 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @Transactional
+@Service
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
-    private final HostRepository hostRepository;
 
     public ReservationService(
         ReservationRepository reservationRepository,
         UserRepository userRepository,
-        RoomRepository roomRepository,
-        HostRepository hostRepository) {
+        RoomRepository roomRepository
+        ) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
-        this.hostRepository = hostRepository;
     }
 
-
-    public Long updateReservation(final Long id,
+    public ReservationIdResponse updateReservation(final Long id,
         final ReservationUpdateRequest updateRequest) {
-        Reservation findReservation = validReservationId(id);
+        Reservation findReservation = validateReservationId(id);
 
         findReservation.changeInfo(updateRequest.getStartDate(), updateRequest.getEndDate(),
             updateRequest.getGuest());
 
-        return findReservation.getId();
+        return new ReservationIdResponse(findReservation.getId());
     }
 
-    public Long createReservation(final ReservationSaveRequest saveRequest)
+    public ReservationIdResponse createReservation(final ReservationSaveRequest saveRequest)
         throws EntityNotFoundException {
-        User user = validUserId(saveRequest.getUserId());
+        User user = validateUserId(saveRequest.getUserId());
 
         Room room = roomRepository.findById(saveRequest.getRoomId())
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         Reservation savedReservation = reservationRepository.save(saveRequest.toEntity(user, room));
 
-        return savedReservation.getId();
+        return new ReservationIdResponse(savedReservation.getId());
     }
 
-    public Long deleteReservation(final Long reservationId) {
-        Reservation findReservation = validReservationId(reservationId);
+    public ReservationIdResponse deleteReservation(final Long reservationId) {
+        Reservation findReservation = validateReservationId(reservationId);
 
         reservationRepository.delete(findReservation);
-        return reservationId;
+        return new ReservationIdResponse(reservationId);
     }
 
     @Transactional(readOnly = true)
     public Page<FindReservationsByUserResponse> findAllByUser(final Long userId,
         final Pageable pageable) {
-        User user = validUserId(userId);
+        User user = validateUserId(userId);
 
         return reservationRepository.findAllByUserIdOrderByCreatedAt(user.getId(), pageable)
             .map(entity -> FindReservationsByUserResponse.of(entity,
@@ -84,14 +82,14 @@ public class ReservationService {
 
     @Transactional(readOnly = true)
     public FindReservationByGuestResponse findOneByUser(final Long id) {
-        Reservation findReservation = validReservationId(id);
+        Reservation findReservation = validateReservationId(id);
 
         return FindReservationByGuestResponse.of(findReservation);
     }
 
     @Transactional(readOnly = true)
     public FindReservationByHostResponse findOneByHost(final Long id) {
-        Reservation findReservation = validReservationId(id);
+        Reservation findReservation = validateReservationId(id);
 
         return FindReservationByHostResponse.of(findReservation);
     }
@@ -102,12 +100,12 @@ public class ReservationService {
             .stream().map(CheckDateResponse::of).collect(Collectors.toList());
     }
 
-    private User validUserId(Long userId) throws EntityNotFoundException {
+    private User validateUserId(Long userId) throws EntityNotFoundException {
         return userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
-    private Reservation validReservationId(Long reservationId) throws EntityNotFoundException {
+    private Reservation validateReservationId(Long reservationId) throws EntityNotFoundException {
         return reservationRepository.findById(reservationId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.RESERVATION_NOT_FOUND));
     }

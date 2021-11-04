@@ -1,12 +1,13 @@
 package org.programmers.staybb.dto.user;
 
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import org.programmers.staybb.domain.user.Host;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 public class HostResponse {
 
     private final String name;

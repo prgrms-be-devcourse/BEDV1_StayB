@@ -1,12 +1,13 @@
 package org.programmers.staybb.dto.Reservation;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import org.programmers.staybb.domain.reservation.Reservation;
 import org.programmers.staybb.domain.room.CheckDate;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 public class CheckDateResponse {
 
     private final Long reservationId;

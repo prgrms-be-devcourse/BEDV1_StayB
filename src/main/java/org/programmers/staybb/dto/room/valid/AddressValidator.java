@@ -9,6 +9,7 @@ public class AddressValidator implements ConstraintValidator<AddressValid, Addre
 
     @Override
     public boolean isValid(Address address, ConstraintValidatorContext constraintValidatorContext) {
+
         if (!Pattern.matches("^[가-힣]+시$", address.getRegion())) {
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
@@ -20,7 +21,7 @@ public class AddressValidator implements ConstraintValidator<AddressValid, Addre
         if (address.getAddress().isBlank()) {
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
-                "주소는 시, 구(군), 동(읍) 으로 입력하세요.").addConstraintViolation();
+                "주소를 입력하세요.").addConstraintViolation();
             return false;
         }
 

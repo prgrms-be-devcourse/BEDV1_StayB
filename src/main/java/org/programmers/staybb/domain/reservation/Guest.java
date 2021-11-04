@@ -4,8 +4,8 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.Getter;
 
-@Embeddable
 @Getter
+@Embeddable
 public class Guest {
 
     private int adult;
