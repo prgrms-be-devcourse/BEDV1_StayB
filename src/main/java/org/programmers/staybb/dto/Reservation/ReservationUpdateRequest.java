@@ -9,7 +9,6 @@ import javax.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import org.programmers.staybb.domain.reservation.Guest;
 
-
 @Builder
 public class ReservationUpdateRequest {
 
