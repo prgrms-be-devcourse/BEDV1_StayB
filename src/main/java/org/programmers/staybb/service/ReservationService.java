@@ -9,6 +9,7 @@ import org.programmers.staybb.dto.Reservation.CheckDateResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByGuestResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationByHostResponse;
 import org.programmers.staybb.dto.Reservation.FindReservationsByUserResponse;
+import org.programmers.staybb.dto.Reservation.ReservationIdResponse;
 import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
@@ -29,30 +30,28 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
-    private final HostRepository hostRepository;
 
     public ReservationService(
         ReservationRepository reservationRepository,
         UserRepository userRepository,
-        RoomRepository roomRepository,
-        HostRepository hostRepository) {
+        RoomRepository roomRepository
+        ) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
-        this.hostRepository = hostRepository;
     }
 
-    public Long updateReservation(final Long id,
+    public ReservationIdResponse updateReservation(final Long id,
         final ReservationUpdateRequest updateRequest) {
         Reservation findReservation = validateReservationId(id);
 
         findReservation.changeInfo(updateRequest.getStartDate(), updateRequest.getEndDate(),
             updateRequest.getGuest());
 
-        return findReservation.getId();
+        return new ReservationIdResponse(findReservation.getId());
     }
 
-    public Long createReservation(final ReservationSaveRequest saveRequest)
+    public ReservationIdResponse createReservation(final ReservationSaveRequest saveRequest)
         throws EntityNotFoundException {
         User user = validateUserId(saveRequest.getUserId());
 
@@ -61,14 +60,14 @@ public class ReservationService {
 
         Reservation savedReservation = reservationRepository.save(saveRequest.toEntity(user, room));
 
-        return savedReservation.getId();
+        return new ReservationIdResponse(savedReservation.getId());
     }
 
-    public Long deleteReservation(final Long reservationId) {
+    public ReservationIdResponse deleteReservation(final Long reservationId) {
         Reservation findReservation = validateReservationId(reservationId);
 
         reservationRepository.delete(findReservation);
-        return reservationId;
+        return new ReservationIdResponse(reservationId);
     }
 
     @Transactional(readOnly = true)
