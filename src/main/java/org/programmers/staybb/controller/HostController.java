@@ -21,13 +21,13 @@ public class HostController {
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<Long> addHost(final @PathVariable long userId)
+    public ResponseEntity<Long> addHost(final @PathVariable Long userId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(hostService.addHost(userId));
     }
 
     @GetMapping("/{hostId}")
-    public ResponseEntity<HostResponse> getHost(final @PathVariable long hostId)
+    public ResponseEntity<HostResponse> getHost(final @PathVariable Long hostId)
         throws EntityNotFoundException {
         return ResponseEntity.ok(hostService.findHost(hostId));
     }
