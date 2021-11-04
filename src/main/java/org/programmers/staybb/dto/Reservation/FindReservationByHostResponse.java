@@ -2,13 +2,14 @@ package org.programmers.staybb.dto.Reservation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import org.programmers.staybb.domain.reservation.Guest;
 import org.programmers.staybb.domain.reservation.Reservation;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 public class FindReservationByHostResponse {
 
     private final Long id;
@@ -22,7 +23,6 @@ public class FindReservationByHostResponse {
     private final String userPhoneNumber;
     private final String message;
     private final LocalDateTime createdAt;
-
 
     public static FindReservationByHostResponse of(Reservation entity) {
         return FindReservationByHostResponse.builder()
