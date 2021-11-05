@@ -26,7 +26,7 @@ public class RoomSetup {
             .price(10000)
             .description("어서오시오")
             .option(new Option(1, 1, 0.5))
-            .address(new Address("서울시", "서울시 서초구 우면동", "200동 111호"))
+            .address(new Address("서울시", "서울시 강남구 데브코스", "200동 111호"))
             .host(hostSetup.saveHost())
             .build());
     }

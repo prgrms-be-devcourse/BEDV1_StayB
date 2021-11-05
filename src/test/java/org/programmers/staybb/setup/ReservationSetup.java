@@ -74,8 +74,8 @@ public class ReservationSetup {
         Room room = roomSetup.saveRoom();
 
         IntStream.range(0, 10).mapToObj(i -> Reservation.builder()
-            .startDate(LocalDate.of(2021, 12, 6))
-            .endDate(LocalDate.of(2021, 12, 9))
+            .startDate(LocalDate.of(2021, 11, 3 + i))
+            .endDate(LocalDate.of(2021, 11, 9 + i))
             .guest(new Guest(1, 1, 1))
             .message("안녕요")
             .user(user)

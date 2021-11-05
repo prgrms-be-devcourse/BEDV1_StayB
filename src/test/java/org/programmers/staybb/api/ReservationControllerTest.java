@@ -95,7 +95,7 @@ public class ReservationControllerTest extends BaseIntegrationTest {
 
     @Test
     @DisplayName("유저 등록한 예약 전체 조회")
-    void findAllByHost() throws Exception {
+    void findAllByGuest() throws Exception {
         //given
         Map<String, Long> idMap = reservationSetup.saveReservations();
         Long userId = idMap.get("userId");
@@ -108,7 +108,7 @@ public class ReservationControllerTest extends BaseIntegrationTest {
         //then
         resultActions
             .andExpect(status().isOk())
-            .andExpect(jsonPath("totalElements").value(10));
+            .andExpect(jsonPath("totalElements").value(8));
     }
 
     @Test
