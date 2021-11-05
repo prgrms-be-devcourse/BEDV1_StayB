@@ -14,7 +14,7 @@ import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.global.exception.ErrorCode;
-import org.programmers.staybb.repository.HostRepository;
+import org.programmers.staybb.global.exception.OverCrowdingException;
 import org.programmers.staybb.repository.ReservationRepository;
 import org.programmers.staybb.repository.RoomRepository;
 import org.programmers.staybb.repository.UserRepository;
@@ -35,28 +35,37 @@ public class ReservationService {
         ReservationRepository reservationRepository,
         UserRepository userRepository,
         RoomRepository roomRepository
-        ) {
+    ) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
     }
 
     public ReservationIdResponse updateReservation(final Long id,
-        final ReservationUpdateRequest updateRequest) {
+        final ReservationUpdateRequest updateRequest) throws OverCrowdingException {
         Reservation findReservation = validateReservationId(id);
 
+        if (findReservation.getRoom().getMaxGuest() < updateRequest.getGuestRequest().toEntity()
+            .getTotalGuest()) {
+            throw new OverCrowdingException(ErrorCode.OVER_CROWDING);
+        }
+
         findReservation.changeInfo(updateRequest.getStartDate(), updateRequest.getEndDate(),
-            updateRequest.getGuest());
+            updateRequest.getGuestRequest().toEntity());
 
         return new ReservationIdResponse(findReservation.getId());
     }
 
     public ReservationIdResponse createReservation(final ReservationSaveRequest saveRequest)
-        throws EntityNotFoundException {
+        throws EntityNotFoundException, OverCrowdingException {
         User user = validateUserId(saveRequest.getUserId());
 
         Room room = roomRepository.findById(saveRequest.getRoomId())
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.ROOM_NOT_FOUND));
+
+        if (room.getMaxGuest() < saveRequest.getGuestRequest().toEntity().getTotalGuest()) {
+            throw new OverCrowdingException(ErrorCode.OVER_CROWDING);
+        }
 
         Reservation savedReservation = reservationRepository.save(saveRequest.toEntity(user, room));
 

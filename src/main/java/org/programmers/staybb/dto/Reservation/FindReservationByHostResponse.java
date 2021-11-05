@@ -34,6 +34,7 @@ public class FindReservationByHostResponse {
             .totalPrice(entity.getTotalPrice())
             .roomName(entity.getRoom().getRoomName())
             .userName(entity.getUser().getName())
+            .message(entity.getMessage())
             .userPhoneNumber(entity.getUser().getPhoneNumber())
             .build();
 

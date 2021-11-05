@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 import org.programmers.staybb.domain.room.Room;
 import org.programmers.staybb.domain.user.Host;
 import org.programmers.staybb.domain.user.User;
+import org.programmers.staybb.dto.user.HostFindResponse;
 import org.programmers.staybb.dto.user.HostIdResponse;
-import org.programmers.staybb.dto.user.HostResponse;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
 import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.repository.HostRepository;
@@ -36,13 +36,13 @@ public class HostService {
     }
 
     @Transactional(readOnly = true)
-    public HostResponse findHost(final Long hostId) {
+    public HostFindResponse findHost(final Long hostId) {
         Host findHost = validHostId(hostId);
 
         List<Long> roomIds = findHost.getRooms().stream().map(Room::getId)
             .collect(Collectors.toList());
 
-        return HostResponse.of(findHost, findHost.getUser().getName(), roomIds);
+        return HostFindResponse.of(findHost, findHost.getUser().getName(), roomIds);
     }
 
     public Long changeToHost(final Long userId) {

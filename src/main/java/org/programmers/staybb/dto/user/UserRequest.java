@@ -19,7 +19,7 @@ public class UserRequest {
     @NotEmpty
     private final String name;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @NotNull(message = "생년월일을 입력해주세요.")
     @Past(message = "생년월일을 다시 입력해주세요.")
     private final LocalDate birthday;

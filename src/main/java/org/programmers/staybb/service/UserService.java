@@ -20,12 +20,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserIdResponse addUser(final UserRequest userRequest) {
+    public UserIdResponse createUser(final UserRequest userRequest) {
         User user = userRequest.toEntity();
         return new UserIdResponse(userRepository.save(user).getId());
     }
 
-    public UserIdResponse removeUser(final Long userId) throws EntityNotFoundException {
+    public UserIdResponse deleteUser(final Long userId) throws EntityNotFoundException {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
         userRepository.delete(user);

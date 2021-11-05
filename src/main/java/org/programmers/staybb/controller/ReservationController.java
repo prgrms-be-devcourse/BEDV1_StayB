@@ -10,6 +10,7 @@ import org.programmers.staybb.dto.Reservation.ReservationIdResponse;
 import org.programmers.staybb.dto.Reservation.ReservationSaveRequest;
 import org.programmers.staybb.dto.Reservation.ReservationUpdateRequest;
 import org.programmers.staybb.global.exception.EntityNotFoundException;
+import org.programmers.staybb.global.exception.OverCrowdingException;
 import org.programmers.staybb.service.ReservationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,25 +38,25 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<ReservationIdResponse> createReservation(
         final @Valid @RequestBody ReservationSaveRequest saveRequest)
-        throws EntityNotFoundException {
+        throws EntityNotFoundException, OverCrowdingException {
         return ResponseEntity.ok(reservationService.createReservation(saveRequest));
     }
 
     @GetMapping("/guest/{id}")
     public ResponseEntity<FindReservationByGuestResponse> findOneByGuest(
-        final @PathVariable Long reservationId)
+        final @PathVariable Long id)
         throws EntityNotFoundException {
-        return ResponseEntity.ok(reservationService.findOneByUser(reservationId));
+        return ResponseEntity.ok(reservationService.findOneByUser(id));
     }
 
     @GetMapping("/host/{id}")
     public ResponseEntity<FindReservationByHostResponse> findOneByHost(
-        final @PathVariable Long reservationId)
+        final @PathVariable Long id)
         throws EntityNotFoundException {
-        return ResponseEntity.ok(reservationService.findOneByHost(reservationId));
+        return ResponseEntity.ok(reservationService.findOneByHost(id));
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public ResponseEntity<Page<FindReservationsByUserResponse>> findAllByUser(
         final @PathVariable Long userId, Pageable pageable)
         throws EntityNotFoundException {
@@ -64,12 +65,13 @@ public class ReservationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ReservationIdResponse> updateOne(final @PathVariable Long id,
-        final @Valid @RequestBody ReservationUpdateRequest updateRequest) throws EntityNotFoundException {
+        final @Valid @RequestBody ReservationUpdateRequest updateRequest)
+        throws EntityNotFoundException, OverCrowdingException {
         return ResponseEntity.ok(reservationService.updateReservation(id, updateRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ReservationIdResponse> removeOne(final @PathVariable Long id)
+    public ResponseEntity<ReservationIdResponse> deleteReservation(final @PathVariable Long id)
         throws EntityNotFoundException {
         return ResponseEntity.ok(reservationService.deleteReservation(id));
     }
