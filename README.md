@@ -36,7 +36,7 @@
     - 박건희 : 숙소 등록, 업데이트(patch), 입력값 검증
     - 변민지 : 숙소 검색
 - 주요 기능
-![프로젝트 주요 기능.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7789a8fe-e793-4795-9f29-f42d56ea71f4/프로젝트_주요_기능.png)
+![프로젝트 주요 기능.png](https://github.com/prgrms-be-devcourse/BEDV1_StayB/blob/2a65def14567457bb258d8e3b1f025b4aea705df/img/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%A3%BC%EC%9A%94%20%EA%B8%B0%EB%8A%A5.png)
 
 ## 4. 요구사항 명세: [링크](https://www.notion.so/6e725fc8852347628c1ae40876c40c78)
 
@@ -44,7 +44,7 @@
 
 ## 6. ERD
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bb7fb2bc-0dd1-40ae-aa3c-c1b9558cbdd4/Untitled.png)
+![Untitled](https://github.com/prgrms-be-devcourse/BEDV1_StayB/blob/2a65def14567457bb258d8e3b1f025b4aea705df/img/erd.png)
 
 ## 7. 협업 규칙
 
