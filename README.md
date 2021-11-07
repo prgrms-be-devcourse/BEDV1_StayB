@@ -41,6 +41,7 @@
 ## 4. 요구사항 명세: [링크](https://www.notion.so/6e725fc8852347628c1ae40876c40c78)
 
 ## 5. 자동화 API 문서
+BEDV1_StayB/src/docs/asciidoc/index.html 참고
 
 ## 6. ERD
 
