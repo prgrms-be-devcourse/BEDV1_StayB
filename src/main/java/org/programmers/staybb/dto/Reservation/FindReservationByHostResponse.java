@@ -36,6 +36,7 @@ public class FindReservationByHostResponse {
             .userName(entity.getUser().getName())
             .message(entity.getMessage())
             .userPhoneNumber(entity.getUser().getPhoneNumber())
+            .createdAt(entity.getCreatedAt())
             .build();
 
     }
