@@ -1,0 +1,100 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+=  StayB
+
+Version 0.0.1-SNAPSHOT
+
+== 1. 공통응답
+
+== 2. 사용자
+
+=== 2.1 사용자 생성 [POST]
+
+ /v1/user
+
+operation::user-controller-test/create-user[snippets='request-fields,http-request,response-fields,http-response']
+
+=== 2.2 사용자 삭제 [DELETE]
+
+operation::user-controller-test/delete-user[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 2.3 사용자 정보 변경 [PATCH}
+
+operation::user-controller-test/update-all-user[snippets='path-parameters,request-fields,request-parameters,http-request,response-fields,http-response']
+
+== 3. 호스트
+
+=== 3.1 호스트 생성 [POST]
+
+operation::host-controller-test/create-host[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 3.2 호스트 프로필 조회 [GET]
+
+operation::host-controller-test/find-host[snippets='path-parameters,http-request,response-fields,http-response']
+
+== 4. 숙소
+
+=== 4.1 숙소 생성 [POST]
+
+ /v1/rooms
+
+operation::room-controller-test/create-room[snippets='request-fields,http-request,response-fields,http-response']
+
+=== 4.2 숙소 삭제 [DELETE]
+
+operation::room-controller-test/delete-room[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 4.3 숙소 정보 변경 [PATCH]
+
+operation::room-controller-test/update-all-room[snippets='path-parameters,request-parameters,request-fields,http-request,response-fields,http-response']
+
+=== 4.4 호스트가 등록한 숙소 리스트 조회 [GET]
+
+ /v1/rooms
+
+operation::room-controller-test/find-all-by-host[snippets='request-parameters,http-request,response-fields,http-response']
+
+=== 4.4 숙소 세부 조회 [GET]
+
+operation::room-controller-test/find-one-room[snippets='path-parameters,http-request,response-fields,http-response']
+
+== 5. 예약
+
+=== 5.1 예약 생성 [POST]
+
+ /v1/reservation
+
+operation::reservation-controller-test/create-reservation[snippets='request-fields,http-request,response-fields,http-response']
+
+=== 5.2 예약 취소 [DELETE]
+
+operation::reservation-controller-test/delete-reservation[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 5.2 예약 변경 [PUT]
+
+operation::reservation-controller-test/update-reservation[snippets='path-parameters,request-fields,http-request,response-fields,http-response']
+
+=== 5.3 게스트가 등록한 예약 리스트 조회 [GET]
+
+operation::reservation-controller-test/find-all-by-guest[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 5.4 게스트가 예약 세부 정보 조회 [GET]
+
+operation::reservation-controller-test/find-one-by-guest[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 5.5 호스트가 예약 세부 정보 조회 [GET]
+
+operation::reservation-controller-test/find-one-by-host[snippets='path-parameters,http-request,response-fields,http-response']
+
+=== 5.6 숙소의 등록된 예약 리스트 조회 [GET]
+
+operation::reservation-controller-test/find-all-check-date[snippets='path-parameters,http-request,response-fields,http-response']
+
+== 6 검색
+
+ /v1/search
+
+operation::search-controller-test/get-all-by-check-date-and-region-test[snippets='request-parameters,http-request,response-fields,http-response']
