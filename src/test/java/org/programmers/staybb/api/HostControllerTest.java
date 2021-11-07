@@ -2,8 +2,12 @@ package org.programmers.staybb.api;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +20,7 @@ import org.programmers.staybb.global.exception.ErrorCode;
 import org.programmers.staybb.setup.HostSetup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
 public class HostControllerTest extends BaseIntegrationTest {
@@ -35,7 +40,15 @@ public class HostControllerTest extends BaseIntegrationTest {
         //then
         resultActions
             .andExpect(status().isOk())
-            .andExpect(jsonPath("id", is(notNullValue())));
+            .andExpect(jsonPath("id", is(notNullValue())))
+            .andDo(restDocs.document(
+                pathParameters(
+                    parameterWithName("userId").description("사용자 id")
+                ),
+                responseFields(
+                    fieldWithPath("id").type(JsonFieldType.NUMBER).description("호스트 id")
+                )
+            ));
     }
 
     @Test
@@ -51,7 +64,18 @@ public class HostControllerTest extends BaseIntegrationTest {
         resultActions
             .andExpect(status().isOk())
             .andExpect(jsonPath("name").value(host.getUser().getName()))
-            .andExpect(jsonPath("superhost").value(false));
+            .andExpect(jsonPath("superhost").value(false))
+            .andDo(restDocs.document(
+                pathParameters(
+                    parameterWithName("hostId").description("호스트 id")
+                ),
+                responseFields(
+                    fieldWithPath("name").type(JsonFieldType.STRING).description("호스트 이름"),
+                    fieldWithPath("superhost").type(JsonFieldType.BOOLEAN)
+                        .description("슈퍼호스트 여부"),
+                    fieldWithPath("roomIds").type(JsonFieldType.ARRAY).description("호스트 id")
+                )
+            ));
 
     }
 
@@ -69,25 +93,5 @@ public class HostControllerTest extends BaseIntegrationTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("message").value(ErrorCode.USER_NOT_FOUND.getMessage()));
     }
-
-/*    @Test
-    @DisplayName("사용자를 삭제하면 호스트 정보도 사라진다.")
-    void hostDeleteByUserDelete() throws Exception {
-        //given
-        Host host = hostSetup.saveHost();
-        Long userId = host.getUser().getId();
-        //when
-        mockMvc.perform(delete("/v1/user/{id}", userId)
-                .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print());
-
-        ResultActions resultActions = mockMvc.perform(get("/v1/host/{hostId}", host.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print());
-        //then
-        resultActions
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("message").value(ErrorCode.HOST_NOT_FOUND));
-    }*/
 
 }
