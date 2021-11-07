@@ -36,7 +36,7 @@
     - 박건희 : 숙소 등록, 업데이트(patch), 입력값 검증
     - 변민지 : 숙소 검색
 - 주요 기능
-![프로젝트 주요 기능.png](https://github.com/prgrms-be-devcourse/BEDV1_StayB/blob/2a65def14567457bb258d8e3b1f025b4aea705df/img/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%A3%BC%EC%9A%94%20%EA%B8%B0%EB%8A%A5.png)
+![프로젝트 주요 기능.png](https://github.com/prgrms-be-devcourse/BEDV1_StayB/blob/9bf5b92b553b1148b9dc2543ffe411f910fb4a1b/img/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%A3%BC%EC%9A%94%20%EA%B8%B0%EB%8A%A5.png)
 
 ## 4. 요구사항 명세: [링크](https://www.notion.so/6e725fc8852347628c1ae40876c40c78)
 
