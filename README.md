@@ -15,7 +15,8 @@
 ## 2. 개발 환경
 
 - Language : Java 11
-- Framework : SpringBoot, JPA
+- Framework : SpringBoot
+- ORM : JPA-Hibernate
 - DB : MySQL
 - Build : Maven
 - IDE : IntelliJ
